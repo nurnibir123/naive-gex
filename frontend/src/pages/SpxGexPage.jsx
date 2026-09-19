@@ -105,7 +105,18 @@ export default function SpxGexPage({ selectedDate }) {
         </div>
       </div>
 
-      {loading ? <p className="status-text">Loading {ticker} gamma analytics...</p> : null}
+      {loading ? (
+        <div className="analytics-loading" role="status" aria-live="polite">
+          <div className="analytics-loading-header">
+            <span className="loading-spinner" aria-hidden="true" />
+            <div>
+              <p className="analytics-loading-title">Loading {ticker} gamma analytics...</p>
+              <p className="analytics-loading-note">Fetching the option chain and building the exposure profile.</p>
+            </div>
+          </div>
+          <div className="loading-progress" aria-hidden="true"><span /></div>
+        </div>
+      ) : null}
       {error ? <p className="status-text error">{error}</p> : null}
 
       {!loading && !error ? (
