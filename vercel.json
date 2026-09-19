@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm --prefix frontend ci && npm --prefix frontend run build",
+  "outputDirectory": "frontend/dist",
+  "crons": [
+    {
+      "path": "/api/cron/refresh",
+      "schedule": "30 21 * * 1-5"
+    }
+  ]
+}

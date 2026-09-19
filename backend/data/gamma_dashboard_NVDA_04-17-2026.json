@@ -1,0 +1,644 @@
+{
+  "ticker": "NVDA",
+  "date_key": "04-17-2026",
+  "last_updated": "2026-04-19T19:14:41.037465+00:00",
+  "spot_price": 200.98,
+  "total_gex": 1.6120619200064148,
+  "total_vanna": 59.50867678264804,
+  "gex_by_strike": [
+    {
+      "strike": 171.0,
+      "gex_bn": -0.00022576029497163995
+    },
+    {
+      "strike": 172.0,
+      "gex_bn": -0.00131389413729912
+    },
+    {
+      "strike": 172.5,
+      "gex_bn": -0.0008430899480608798
+    },
+    {
+      "strike": 173.0,
+      "gex_bn": -0.00038354327688612
+    },
+    {
+      "strike": 174.0,
+      "gex_bn": -0.00024360186558032007
+    },
+    {
+      "strike": 175.0,
+      "gex_bn": -0.020962637715683036
+    },
+    {
+      "strike": 176.0,
+      "gex_bn": 0.00186599723793444
+    },
+    {
+      "strike": 177.0,
+      "gex_bn": 0.00069785301964664
+    },
+    {
+      "strike": 177.5,
+      "gex_bn": -0.0017009516017400398
+    },
+    {
+      "strike": 178.0,
+      "gex_bn": -0.0005835934525631602
+    },
+    {
+      "strike": 179.0,
+      "gex_bn": 0.00037976249579268004
+    },
+    {
+      "strike": 180.0,
+      "gex_bn": 0.0009321766222230772
+    },
+    {
+      "strike": 181.0,
+      "gex_bn": -0.0009262428963403201
+    },
+    {
+      "strike": 182.0,
+      "gex_bn": 0.0003742084637376795
+    },
+    {
+      "strike": 182.5,
+      "gex_bn": -0.01931234292558064
+    },
+    {
+      "strike": 183.0,
+      "gex_bn": 0.00016157588089603988
+    },
+    {
+      "strike": 184.0,
+      "gex_bn": 0.00060651645759016
+    },
+    {
+      "strike": 185.0,
+      "gex_bn": 0.02334906593400315
+    },
+    {
+      "strike": 186.0,
+      "gex_bn": 0.0006733789249402802
+    },
+    {
+      "strike": 187.0,
+      "gex_bn": -4.175824246151991e-05
+    },
+    {
+      "strike": 187.5,
+      "gex_bn": -0.0074815033393672
+    },
+    {
+      "strike": 188.0,
+      "gex_bn": 0.00245865083151532
+    },
+    {
+      "strike": 189.0,
+      "gex_bn": 0.00208531081642624
+    },
+    {
+      "strike": 190.0,
+      "gex_bn": 0.08927091453317648
+    },
+    {
+      "strike": 191.0,
+      "gex_bn": 3.1369173046639684e-05
+    },
+    {
+      "strike": 192.0,
+      "gex_bn": 0.0005099086142014801
+    },
+    {
+      "strike": 192.5,
+      "gex_bn": 0.006556173323931918
+    },
+    {
+      "strike": 193.0,
+      "gex_bn": 0.0005276047701527197
+    },
+    {
+      "strike": 194.0,
+      "gex_bn": 0.0039501083834368005
+    },
+    {
+      "strike": 195.0,
+      "gex_bn": 0.17026342916843829
+    },
+    {
+      "strike": 197.5,
+      "gex_bn": 0.015603109882897162
+    },
+    {
+      "strike": 200.0,
+      "gex_bn": 0.37697965913958636
+    },
+    {
+      "strike": 202.5,
+      "gex_bn": 0.14712481459741517
+    },
+    {
+      "strike": 205.0,
+      "gex_bn": 0.18441210568691663
+    },
+    {
+      "strike": 207.5,
+      "gex_bn": 0.07255537444227123
+    },
+    {
+      "strike": 210.0,
+      "gex_bn": 0.2072566150739713
+    },
+    {
+      "strike": 212.0,
+      "gex_bn": 0.0020237115518162395
+    },
+    {
+      "strike": 212.5,
+      "gex_bn": 0.006442931659450519
+    },
+    {
+      "strike": 213.0,
+      "gex_bn": 0.00192733798759788
+    },
+    {
+      "strike": 214.0,
+      "gex_bn": 0.00108954355664544
+    },
+    {
+      "strike": 215.0,
+      "gex_bn": 0.06350145797974888
+    },
+    {
+      "strike": 216.0,
+      "gex_bn": 0.0007611851422578
+    },
+    {
+      "strike": 217.0,
+      "gex_bn": 0.00089606531562548
+    },
+    {
+      "strike": 217.5,
+      "gex_bn": 0.00018178043968811996
+    },
+    {
+      "strike": 218.0,
+      "gex_bn": 0.0015279121986824795
+    },
+    {
+      "strike": 219.0,
+      "gex_bn": 0.0006284659922715199
+    },
+    {
+      "strike": 220.0,
+      "gex_bn": 0.09248805629649091
+    },
+    {
+      "strike": 221.0,
+      "gex_bn": 0.0011508439133484799
+    },
+    {
+      "strike": 222.0,
+      "gex_bn": 0.0011189173174483199
+    },
+    {
+      "strike": 223.0,
+      "gex_bn": 0.0011740617869863996
+    },
+    {
+      "strike": 224.0,
+      "gex_bn": 0.0010426311724368797
+    },
+    {
+      "strike": 225.0,
+      "gex_bn": 0.04647877789655411
+    },
+    {
+      "strike": 226.0,
+      "gex_bn": 0.0013174608357024399
+    },
+    {
+      "strike": 227.0,
+      "gex_bn": 0.0009556166571431998
+    },
+    {
+      "strike": 228.0,
+      "gex_bn": 0.006027183075237479
+    },
+    {
+      "strike": 230.0,
+      "gex_bn": 0.05268945407300068
+    }
+  ],
+  "vanna_by_strike": [
+    {
+      "strike": 171.0,
+      "vanna_m": 0.007419314596477256
+    },
+    {
+      "strike": 172.0,
+      "vanna_m": 0.011158183905861279
+    },
+    {
+      "strike": 172.5,
+      "vanna_m": 0.001357300571201114
+    },
+    {
+      "strike": 173.0,
+      "vanna_m": 0.007528854446213554
+    },
+    {
+      "strike": 174.0,
+      "vanna_m": -0.0016812642442034023
+    },
+    {
+      "strike": 175.0,
+      "vanna_m": 0.01688706075529904
+    },
+    {
+      "strike": 176.0,
+      "vanna_m": -0.0859272686764852
+    },
+    {
+      "strike": 177.0,
+      "vanna_m": -0.00954728776395661
+    },
+    {
+      "strike": 177.5,
+      "vanna_m": 0.0022566209991043873
+    },
+    {
+      "strike": 178.0,
+      "vanna_m": 0.0039880339028759045
+    },
+    {
+      "strike": 179.0,
+      "vanna_m": -0.008590590669718378
+    },
+    {
+      "strike": 180.0,
+      "vanna_m": -0.18601154233257022
+    },
+    {
+      "strike": 181.0,
+      "vanna_m": 0.002987132277838596
+    },
+    {
+      "strike": 182.0,
+      "vanna_m": -0.0023630251099611855
+    },
+    {
+      "strike": 182.5,
+      "vanna_m": 0.014823437118121199
+    },
+    {
+      "strike": 183.0,
+      "vanna_m": -0.0025349822897800765
+    },
+    {
+      "strike": 184.0,
+      "vanna_m": -0.007663202080804059
+    },
+    {
+      "strike": 185.0,
+      "vanna_m": -0.16370909139914408
+    },
+    {
+      "strike": 186.0,
+      "vanna_m": -0.005368998808836699
+    },
+    {
+      "strike": 187.0,
+      "vanna_m": 0.001987723950641852
+    },
+    {
+      "strike": 187.5,
+      "vanna_m": 0.003629537956015522
+    },
+    {
+      "strike": 188.0,
+      "vanna_m": -0.013593790345307982
+    },
+    {
+      "strike": 189.0,
+      "vanna_m": -0.017280127128072434
+    },
+    {
+      "strike": 190.0,
+      "vanna_m": -0.38371652865658246
+    },
+    {
+      "strike": 191.0,
+      "vanna_m": 0.0015588344870136324
+    },
+    {
+      "strike": 192.0,
+      "vanna_m": -0.0021747390287590773
+    },
+    {
+      "strike": 192.5,
+      "vanna_m": -0.0023673786207582814
+    },
+    {
+      "strike": 193.0,
+      "vanna_m": -0.0029326472206189632
+    },
+    {
+      "strike": 194.0,
+      "vanna_m": -0.02836888957209669
+    },
+    {
+      "strike": 195.0,
+      "vanna_m": -0.17616230636481212
+    },
+    {
+      "strike": 197.5,
+      "vanna_m": -0.0017161019683550553
+    },
+    {
+      "strike": 200.0,
+      "vanna_m": -0.10938592881182092
+    },
+    {
+      "strike": 202.5,
+      "vanna_m": 0.006002032425116968
+    },
+    {
+      "strike": 205.0,
+      "vanna_m": 0.0806327879629816
+    },
+    {
+      "strike": 207.5,
+      "vanna_m": 0.0141258988954125
+    },
+    {
+      "strike": 210.0,
+      "vanna_m": 0.5725956700318446
+    },
+    {
+      "strike": 212.0,
+      "vanna_m": 0.010550903745646344
+    },
+    {
+      "strike": 212.5,
+      "vanna_m": 0.0028988597153945693
+    },
+    {
+      "strike": 213.0,
+      "vanna_m": 0.01292057957110161
+    },
+    {
+      "strike": 214.0,
+      "vanna_m": 0.007077132490795112
+    },
+    {
+      "strike": 215.0,
+      "vanna_m": 0.23405156884565645
+    },
+    {
+      "strike": 216.0,
+      "vanna_m": 0.003199973707831627
+    },
+    {
+      "strike": 217.0,
+      "vanna_m": 0.005694651670813022
+    },
+    {
+      "strike": 217.5,
+      "vanna_m": 0.000139298829734302
+    },
+    {
+      "strike": 218.0,
+      "vanna_m": 0.009643886999701468
+    },
+    {
+      "strike": 219.0,
+      "vanna_m": 0.0045594849915414504
+    },
+    {
+      "strike": 220.0,
+      "vanna_m": 0.8698026461926565
+    },
+    {
+      "strike": 221.0,
+      "vanna_m": 0.01371712963777491
+    },
+    {
+      "strike": 222.0,
+      "vanna_m": 0.013103427477360936
+    },
+    {
+      "strike": 223.0,
+      "vanna_m": 0.014004499778087378
+    },
+    {
+      "strike": 224.0,
+      "vanna_m": 0.011129898543138627
+    },
+    {
+      "strike": 225.0,
+      "vanna_m": 0.3950252376156833
+    },
+    {
+      "strike": 226.0,
+      "vanna_m": 0.025308186878296363
+    },
+    {
+      "strike": 227.0,
+      "vanna_m": 0.013394435207483336
+    },
+    {
+      "strike": 228.0,
+      "vanna_m": 0.1829611761578267
+    },
+    {
+      "strike": 230.0,
+      "vanna_m": 1.2502716258214752
+    }
+  ],
+  "gex_by_expiration": [
+    {
+      "expiration": "2026-04-20",
+      "gex_bn": 0.06502007575824331
+    },
+    {
+      "expiration": "2026-04-22",
+      "gex_bn": 0.04301747684480583
+    },
+    {
+      "expiration": "2026-04-24",
+      "gex_bn": 0.3799312010310866
+    },
+    {
+      "expiration": "2026-04-27",
+      "gex_bn": 0.00352155523077696
+    },
+    {
+      "expiration": "2026-04-29",
+      "gex_bn": 0.004619512641073719
+    },
+    {
+      "expiration": "2026-05-01",
+      "gex_bn": 0.14337799994437553
+    },
+    {
+      "expiration": "2026-05-08",
+      "gex_bn": 0.07392723247774435
+    },
+    {
+      "expiration": "2026-05-15",
+      "gex_bn": 0.31297537747089016
+    },
+    {
+      "expiration": "2026-05-22",
+      "gex_bn": 0.025242340538095716
+    },
+    {
+      "expiration": "2026-05-29",
+      "gex_bn": 0.05998718963902807
+    },
+    {
+      "expiration": "2026-06-18",
+      "gex_bn": 0.21368642306058785
+    },
+    {
+      "expiration": "2026-07-17",
+      "gex_bn": 0.027758676556358275
+    },
+    {
+      "expiration": "2026-08-21",
+      "gex_bn": 0.02146755779927512
+    },
+    {
+      "expiration": "2026-09-18",
+      "gex_bn": 0.031181608335022603
+    },
+    {
+      "expiration": "2026-10-16",
+      "gex_bn": -0.0012367516615272008
+    },
+    {
+      "expiration": "2026-11-20",
+      "gex_bn": -0.0017316381337559195
+    },
+    {
+      "expiration": "2026-12-18",
+      "gex_bn": 0.051664656392580395
+    },
+    {
+      "expiration": "2027-01-15",
+      "gex_bn": 0.08735983067284356
+    },
+    {
+      "expiration": "2027-03-19",
+      "gex_bn": -0.0013092772219253992
+    }
+  ],
+  "key_levels": {
+    "call_wall": 210.0,
+    "put_wall": 175.0,
+    "strongest_positive": 200.0,
+    "strongest_negative": 175.0,
+    "gamma_flip": 187.75,
+    "nearest_pivot": 200.0,
+    "support_zone": {
+      "low": 198.5,
+      "high": 201.5
+    },
+    "resistance_zone": {
+      "low": 208.5,
+      "high": 211.5
+    },
+    "pin_zone": {
+      "low": 200.0,
+      "high": 202.5
+    },
+    "high_risk_zone": {
+      "low": 185.5,
+      "high": 189.5
+    },
+    "calls_above_level": 210.0,
+    "puts_below_level": 175.0
+  },
+  "gamma_regime": "positive_gamma_stable",
+  "trade_levels": {
+    "upside_targets": [
+      210.0,
+      205.0,
+      202.5
+    ],
+    "downside_targets": [
+      175.0,
+      182.5,
+      187.5
+    ],
+    "suggested_spread_ranges": [
+      {
+        "type": "call_spread",
+        "lower": 210.0,
+        "upper": 212.0
+      },
+      {
+        "type": "put_spread",
+        "lower": 174.0,
+        "upper": 175.0
+      }
+    ],
+    "major_support_zone": {
+      "low": 198.5,
+      "high": 201.5
+    },
+    "major_resistance_zone": {
+      "low": 208.5,
+      "high": 211.5
+    },
+    "pin_magnet_zone": {
+      "low": 200.0,
+      "high": 202.5
+    },
+    "fast_move_zone": {
+      "low": 185.5,
+      "high": 189.5
+    },
+    "calls_above_level": 210.0,
+    "puts_below_level": 175.0
+  },
+  "trade_setups": [
+    {
+      "title": "Pin / Mean-Reversion Frame",
+      "bias": "neutral",
+      "trigger": "Spot holds inside 190-210",
+      "thesis": "Heavy positive gamma near spot can dampen movement and favor range behavior. Vanna is currently supportive, which can reinforce pinning behavior around central strikes.",
+      "risk": "Break and acceptance outside the pin zone can invalidate the range setup.",
+      "exact_trade": "NVDA 2026-04-20 Iron Condor: Buy 180 Put / Sell 190 Put / Sell 210 Call / Buy 220 Call (1-lot structure)."
+    },
+    {
+      "title": "Upside Compression Toward Call Wall",
+      "bias": "bullish_tactical",
+      "trigger": "Spot reclaims and holds above 210",
+      "thesis": "Positive gamma above can attract price toward the next call concentration while compressing realized vol. Vanna near spot is not strongly supportive, so upside follow-through may be less persistent.",
+      "risk": "Failure back below the reclaimed wall can trap upside continuation entries.",
+      "exact_trade": "NVDA 2026-04-20 Call Debit Spread: Buy 210 Call / Sell 220 Call (1-lot structure)."
+    },
+    {
+      "title": "Downside Expansion Through Put Wall",
+      "bias": "bearish_tactical",
+      "trigger": "Spot loses and accepts below 175",
+      "thesis": "Negative gamma below can open a faster move toward the next downside pocket. Supportive vanna can partially cushion downside acceleration unless the wall breaks decisively.",
+      "risk": "Quick reclaim above the broken put wall can trigger short-covering and whipsaw.",
+      "exact_trade": "NVDA 2026-04-20 Put Debit Spread: Buy 175 Put / Sell 165 Put (1-lot structure)."
+    }
+  ],
+  "trader_notes": [
+    "Calls above 210 and puts below 175 define the nearest directional gates.",
+    "Spot is away from the gamma flip, so structural walls are the primary reference points.",
+    "Positive gamma dominates; range and spread structures are generally favored while key walls hold."
+  ],
+  "expiration_focus": [
+    "Highest expiration concentration is 2026-04-24 at 0.38Bn, which can anchor near-term strike behavior.",
+    "Secondary cluster at 2026-05-15 (0.31Bn) is a nearby catalyst window to monitor.",
+    "When large expiries roll off, nearby strike sensitivity can shift quickly and reprice local support/resistance."
+  ],
+  "option_count": 3776
+}

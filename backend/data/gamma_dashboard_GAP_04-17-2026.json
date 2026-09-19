@@ -1,0 +1,446 @@
+{
+  "ticker": "GAP",
+  "date_key": "04-17-2026",
+  "last_updated": "2026-04-19T19:38:10.378269+00:00",
+  "spot_price": 27.02,
+  "total_gex": 0.0023640756064892392,
+  "total_vanna": 0.0711707588527017,
+  "gex_by_strike": [
+    {
+      "strike": 23.0,
+      "gex_bn": -0.0001446245467576
+    },
+    {
+      "strike": 23.5,
+      "gex_bn": -2.4026215883600005e-06
+    },
+    {
+      "strike": 24.0,
+      "gex_bn": -3.709881650188001e-05
+    },
+    {
+      "strike": 24.5,
+      "gex_bn": -3.0357473112400006e-06
+    },
+    {
+      "strike": 25.0,
+      "gex_bn": -0.00018559651278951997
+    },
+    {
+      "strike": 25.5,
+      "gex_bn": 4.253375402359999e-06
+    },
+    {
+      "strike": 26.0,
+      "gex_bn": 2.0706175264600008e-05
+    },
+    {
+      "strike": 26.5,
+      "gex_bn": 8.71409363832e-06
+    },
+    {
+      "strike": 27.0,
+      "gex_bn": 0.0023383333366254395
+    },
+    {
+      "strike": 27.5,
+      "gex_bn": 5.1936459495200006e-06
+    },
+    {
+      "strike": 28.0,
+      "gex_bn": 9.628168900727999e-05
+    },
+    {
+      "strike": 28.5,
+      "gex_bn": 3.3983782459200003e-06
+    },
+    {
+      "strike": 29.0,
+      "gex_bn": 4.792788005096001e-05
+    },
+    {
+      "strike": 29.5,
+      "gex_bn": 0.0
+    },
+    {
+      "strike": 30.0,
+      "gex_bn": 0.00029137275138272
+    },
+    {
+      "strike": 30.5,
+      "gex_bn": 0.0
+    },
+    {
+      "strike": 31.0,
+      "gex_bn": -9.080009934800033e-07
+    }
+  ],
+  "vanna_by_strike": [
+    {
+      "strike": 23.0,
+      "vanna_m": 0.0008633894744633604
+    },
+    {
+      "strike": 23.5,
+      "vanna_m": 3.831354552183567e-06
+    },
+    {
+      "strike": 24.0,
+      "vanna_m": 0.0002764093560325684
+    },
+    {
+      "strike": 24.5,
+      "vanna_m": 1.8512953367875647e-06
+    },
+    {
+      "strike": 25.0,
+      "vanna_m": 0.003321174552183567
+    },
+    {
+      "strike": 25.5,
+      "vanna_m": -3.0467505551443366e-06
+    },
+    {
+      "strike": 26.0,
+      "vanna_m": 7.714212435233156e-05
+    },
+    {
+      "strike": 26.5,
+      "vanna_m": -1.6127313101406353e-06
+    },
+    {
+      "strike": 27.0,
+      "vanna_m": -5.438608438193814e-06
+    },
+    {
+      "strike": 27.5,
+      "vanna_m": 1.6140932642487065e-06
+    },
+    {
+      "strike": 28.0,
+      "vanna_m": 0.00017935740932642497
+    },
+    {
+      "strike": 28.5,
+      "vanna_m": 3.4907623982235395e-06
+    },
+    {
+      "strike": 29.0,
+      "vanna_m": 0.0002566957883049594
+    },
+    {
+      "strike": 29.5,
+      "vanna_m": 0.0
+    },
+    {
+      "strike": 30.0,
+      "vanna_m": 0.008012838401184311
+    },
+    {
+      "strike": 30.5,
+      "vanna_m": 0.0
+    },
+    {
+      "strike": 31.0,
+      "vanna_m": -1.1503997039230113e-06
+    }
+  ],
+  "gex_by_expiration": [
+    {
+      "expiration": "2026-04-17",
+      "gex_bn": 0.00225462633340364
+    },
+    {
+      "expiration": "2026-04-24",
+      "gex_bn": 5.1459278945759994e-05
+    },
+    {
+      "expiration": "2026-05-01",
+      "gex_bn": 4.766329891400005e-06
+    },
+    {
+      "expiration": "2026-05-08",
+      "gex_bn": -2.4294885470800013e-06
+    },
+    {
+      "expiration": "2026-05-15",
+      "gex_bn": -0.00011313333179204001
+    },
+    {
+      "expiration": "2026-05-22",
+      "gex_bn": 1.106685073536e-05
+    },
+    {
+      "expiration": "2026-05-29",
+      "gex_bn": -8.828862277199996e-07
+    },
+    {
+      "expiration": "2026-06-18",
+      "gex_bn": 0.00010994696889428007
+    },
+    {
+      "expiration": "2026-09-18",
+      "gex_bn": 9.050448979403999e-05
+    },
+    {
+      "expiration": "2026-12-18",
+      "gex_bn": -6.412887518324e-05
+    },
+    {
+      "expiration": "2027-01-15",
+      "gex_bn": 2.2249930270400005e-05
+    },
+    {
+      "expiration": "2027-03-19",
+      "gex_bn": 6.6146014320400006e-06
+    }
+  ],
+  "gamma_heatmap": {
+    "dates": [
+      "2026-04-17",
+      "2026-04-20",
+      "2026-04-21",
+      "2026-04-22",
+      "2026-04-23"
+    ],
+    "rows": [
+      {
+        "strike": 30.0,
+        "values": {
+          "2026-04-17": 0.00029137275138272,
+          "2026-04-20": 0.00029137275138272,
+          "2026-04-21": 0.00029137275138272,
+          "2026-04-22": 0.00029137275138272,
+          "2026-04-23": 0.00029137275138272
+        }
+      },
+      {
+        "strike": 29.5,
+        "values": {
+          "2026-04-17": 0.0,
+          "2026-04-20": 0.0,
+          "2026-04-21": 0.0,
+          "2026-04-22": 0.0,
+          "2026-04-23": 0.0
+        }
+      },
+      {
+        "strike": 29.0,
+        "values": {
+          "2026-04-17": 4.792788005096001e-05,
+          "2026-04-20": 4.792788005096001e-05,
+          "2026-04-21": 4.792788005096001e-05,
+          "2026-04-22": 4.792788005096001e-05,
+          "2026-04-23": 4.792788005096001e-05
+        }
+      },
+      {
+        "strike": 28.5,
+        "values": {
+          "2026-04-17": 3.3983782459200003e-06,
+          "2026-04-20": 3.3983782459200003e-06,
+          "2026-04-21": 3.3983782459200003e-06,
+          "2026-04-22": 3.3983782459200003e-06,
+          "2026-04-23": 3.3983782459200003e-06
+        }
+      },
+      {
+        "strike": 28.0,
+        "values": {
+          "2026-04-17": 9.628168900727999e-05,
+          "2026-04-20": 9.628168900727999e-05,
+          "2026-04-21": 9.628168900727999e-05,
+          "2026-04-22": 9.628168900727999e-05,
+          "2026-04-23": 9.628168900727999e-05
+        }
+      },
+      {
+        "strike": 27.5,
+        "values": {
+          "2026-04-17": 5.1936459495200006e-06,
+          "2026-04-20": 5.02572745752e-06,
+          "2026-04-21": 5.02572745752e-06,
+          "2026-04-22": 5.02572745752e-06,
+          "2026-04-23": 5.02572745752e-06
+        }
+      },
+      {
+        "strike": 27.0,
+        "values": {
+          "2026-04-17": 0.0023383333366254395,
+          "2026-04-20": 8.446197936344e-05,
+          "2026-04-21": 8.446197936344e-05,
+          "2026-04-22": 8.446197936344e-05,
+          "2026-04-23": 8.446197936344e-05
+        }
+      },
+      {
+        "strike": 26.5,
+        "values": {
+          "2026-04-17": 8.71409363832e-06,
+          "2026-04-20": 8.12703598868e-06,
+          "2026-04-21": 8.12703598868e-06,
+          "2026-04-22": 8.12703598868e-06,
+          "2026-04-23": 8.12703598868e-06
+        }
+      },
+      {
+        "strike": 26.0,
+        "values": {
+          "2026-04-17": 2.0706175264600008e-05,
+          "2026-04-20": 2.0706175264600008e-05,
+          "2026-04-21": 2.0706175264600008e-05,
+          "2026-04-22": 2.0706175264600008e-05,
+          "2026-04-23": 2.0706175264600008e-05
+        }
+      },
+      {
+        "strike": 25.5,
+        "values": {
+          "2026-04-17": 4.253375402359999e-06,
+          "2026-04-20": 4.253375402359999e-06,
+          "2026-04-21": 4.253375402359999e-06,
+          "2026-04-22": 4.253375402359999e-06,
+          "2026-04-23": 4.253375402359999e-06
+        }
+      },
+      {
+        "strike": 25.0,
+        "values": {
+          "2026-04-17": -0.00018559651278951997,
+          "2026-04-20": -0.00018559651278951997,
+          "2026-04-21": -0.00018559651278951997,
+          "2026-04-22": -0.00018559651278951997,
+          "2026-04-23": -0.00018559651278951997
+        }
+      },
+      {
+        "strike": 24.5,
+        "values": {
+          "2026-04-17": -3.0357473112400006e-06,
+          "2026-04-20": -3.0357473112400006e-06,
+          "2026-04-21": -3.0357473112400006e-06,
+          "2026-04-22": -3.0357473112400006e-06,
+          "2026-04-23": -3.0357473112400006e-06
+        }
+      },
+      {
+        "strike": 24.0,
+        "values": {
+          "2026-04-17": -3.709881650188001e-05,
+          "2026-04-20": -3.709881650188001e-05,
+          "2026-04-21": -3.709881650188001e-05,
+          "2026-04-22": -3.709881650188001e-05,
+          "2026-04-23": -3.709881650188001e-05
+        }
+      }
+    ],
+    "max_abs_value": 0.0023383333366254395,
+    "max_cell": {
+      "date": "2026-04-17",
+      "strike": 27.0,
+      "value": 0.0023383333366254395
+    }
+  },
+  "key_levels": {
+    "call_wall": 30.0,
+    "put_wall": 25.0,
+    "strongest_positive": 27.0,
+    "strongest_negative": 25.0,
+    "gamma_flip": 25.25,
+    "nearest_pivot": 27.0,
+    "support_zone": {
+      "low": 25.5,
+      "high": 28.5
+    },
+    "resistance_zone": {
+      "low": 28.5,
+      "high": 31.5
+    },
+    "pin_zone": {
+      "low": 27.0,
+      "high": 27.5
+    },
+    "high_risk_zone": {
+      "low": 23.0,
+      "high": 27.0
+    },
+    "calls_above_level": 30.0,
+    "puts_below_level": 25.0
+  },
+  "gamma_regime": "mixed_balanced",
+  "trade_levels": {
+    "upside_targets": [
+      30.0,
+      28.0,
+      29.0
+    ],
+    "downside_targets": [
+      25.0,
+      23.0,
+      24.0
+    ],
+    "suggested_spread_ranges": [
+      {
+        "type": "put_spread",
+        "lower": 24.5,
+        "upper": 25.0
+      }
+    ],
+    "major_support_zone": {
+      "low": 25.5,
+      "high": 28.5
+    },
+    "major_resistance_zone": {
+      "low": 28.5,
+      "high": 31.5
+    },
+    "pin_magnet_zone": {
+      "low": 27.0,
+      "high": 27.5
+    },
+    "fast_move_zone": {
+      "low": 23.0,
+      "high": 27.0
+    },
+    "calls_above_level": 30.0,
+    "puts_below_level": 25.0
+  },
+  "trade_setups": [
+    {
+      "title": "Pin / Mean-Reversion Frame",
+      "bias": "neutral",
+      "trigger": "Spot holds inside 25-30",
+      "thesis": "Heavy positive gamma near spot can dampen movement and favor range behavior. Vanna is currently supportive, which can reinforce pinning behavior around central strikes.",
+      "risk": "Break and acceptance outside the pin zone can invalidate the range setup.",
+      "exact_trade": "GAP 2026-04-17 Iron Condor: Buy 15 Put / Sell 25 Put / Sell 30 Call / Buy 40 Call (1-lot structure)."
+    },
+    {
+      "title": "Upside Compression Toward Call Wall",
+      "bias": "bullish_tactical",
+      "trigger": "Spot reclaims and holds above 30",
+      "thesis": "Positive gamma above can attract price toward the next call concentration while compressing realized vol. Vanna near spot is not strongly supportive, so upside follow-through may be less persistent.",
+      "risk": "Failure back below the reclaimed wall can trap upside continuation entries.",
+      "exact_trade": "GAP 2026-04-17 Call Debit Spread: Buy 30 Call / Sell 40 Call (1-lot structure)."
+    },
+    {
+      "title": "Downside Expansion Through Put Wall",
+      "bias": "bearish_tactical",
+      "trigger": "Spot loses and accepts below 25",
+      "thesis": "Negative gamma below can open a faster move toward the next downside pocket. Supportive vanna can partially cushion downside acceleration unless the wall breaks decisively.",
+      "risk": "Quick reclaim above the broken put wall can trigger short-covering and whipsaw.",
+      "exact_trade": "GAP 2026-04-17 Put Debit Spread: Buy 25 Put / Sell 15 Put (1-lot structure)."
+    }
+  ],
+  "trader_notes": [
+    "Calls above 30 and puts below 25 define the nearest directional gates.",
+    "Spot is away from the gamma flip, so structural walls are the primary reference points.",
+    "Gamma is mixed; monitor reaction at nearest call/put walls before committing directional size."
+  ],
+  "expiration_focus": [
+    "Highest expiration concentration is 2026-04-17 at 0.00Bn, which can anchor near-term strike behavior.",
+    "Secondary cluster at 2026-05-15 (-0.00Bn) is a nearby catalyst window to monitor.",
+    "When large expiries roll off, nearby strike sensitivity can shift quickly and reprice local support/resistance."
+  ],
+  "option_count": 656
+}
