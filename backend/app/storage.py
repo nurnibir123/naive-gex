@@ -46,6 +46,9 @@ class VercelBlobSnapshotStore(SnapshotStore):
 
     @staticmethod
     def _pathname(path: Path) -> str:
+        parts = path.parts
+        if "data" in parts:
+            return Path(*parts[parts.index("data") + 1 :]).as_posix()
         return path.as_posix().lstrip("/")
 
     def load(self, path: Path) -> Any | None:
