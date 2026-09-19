@@ -1,0 +1,7 @@
+# Generated market-data caches belong in Vercel Blob, not the Function bundle.
+backend/data/
+frontend/node_modules/
+frontend/dist/
+backend/.venv/
+**/__pycache__/
+**/*.pyc
