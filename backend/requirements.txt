@@ -2,4 +2,4 @@ fastapi
 uvicorn[standard]
 pandas
 requests
-vercel-blob
+vercel
