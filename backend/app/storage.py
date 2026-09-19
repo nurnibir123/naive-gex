@@ -5,12 +5,17 @@ import os
 from pathlib import Path
 from typing import Any
 
+DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+
 
 class SnapshotStore:
     def load(self, path: Path) -> Any | None:
         raise NotImplementedError
 
     def save(self, path: Path, payload: Any) -> None:
+        raise NotImplementedError
+
+    def list_pathnames(self, prefix: str) -> list[str]:
         raise NotImplementedError
 
 
@@ -30,6 +35,9 @@ class LocalSnapshotStore(SnapshotStore):
         with temporary.open("w", encoding="utf-8") as file:
             json.dump(payload, file, indent=2)
         temporary.replace(path)
+
+    def list_pathnames(self, prefix: str) -> list[str]:
+        return [path.name for path in DATA_DIR.glob(f"{prefix}*") if path.is_file()]
 
 
 class VercelBlobSnapshotStore(SnapshotStore):
@@ -74,6 +82,23 @@ class VercelBlobSnapshotStore(SnapshotStore):
             content_type="application/json",
             overwrite=True,
         )
+
+    def list_pathnames(self, prefix: str) -> list[str]:
+        try:
+            listing = self.client.list_objects(prefix=prefix)
+            blobs = getattr(listing, "blobs", None)
+            if blobs is None and isinstance(listing, dict):
+                blobs = listing.get("blobs", [])
+            names: list[str] = []
+            for blob in blobs or []:
+                pathname = getattr(blob, "pathname", None)
+                if pathname is None and isinstance(blob, dict):
+                    pathname = blob.get("pathname")
+                if pathname:
+                    names.append(str(pathname))
+            return names
+        except Exception:  # noqa: BLE001 - an unavailable cache behaves as empty
+            return []
 
 
 def get_snapshot_store() -> SnapshotStore:

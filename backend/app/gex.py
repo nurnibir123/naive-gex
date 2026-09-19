@@ -72,8 +72,10 @@ def list_available_gamma_dates(ticker: str = "SPX") -> list[str]:
 
     normalized = _normalize_ticker(ticker)
     keys: list[str] = []
-    for file in DATA_DIR.glob(f"{PROCESSED_PREFIX}_{normalized}_*.json"):
-        suffix = file.stem.replace(f"{PROCESSED_PREFIX}_{normalized}_", "")
+    prefix = f"{PROCESSED_PREFIX}_{normalized}_"
+    for pathname in SNAPSHOT_STORE.list_pathnames(prefix):
+        file = Path(pathname)
+        suffix = file.stem.replace(prefix, "", 1)
         if iso_from_key(suffix):
             keys.append(suffix)
 
