@@ -53,7 +53,7 @@ class VercelBlobSnapshotStore(SnapshotStore):
 
     def load(self, path: Path) -> Any | None:
         try:
-            response = self.client.get(self._pathname(path))
+            response = self.client.get(self._pathname(path), access="private")
             body = response.read() if hasattr(response, "read") else response
             return json.loads(body)
         except Exception:  # noqa: BLE001 - missing snapshots are normal cache misses
