@@ -1,4 +1,23 @@
-export default function TradeSetupsPanel({ setups }) {
+function formatRegime(regime) {
+  return String(regime || 'mixed_balanced')
+    .replaceAll('_', ' ')
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function confirmationFor(setup) {
+  if (setup.confirmation) {
+    return setup.confirmation;
+  }
+  if (String(setup.bias).includes('neutral')) {
+    return 'Require spot acceptance inside the range and stable implied volatility before treating the pin scenario as valid.';
+  }
+  if (String(setup.bias).includes('bullish')) {
+    return 'Require acceptance beyond the call-side level; this snapshot has no order-flow classification to confirm aggressor direction.';
+  }
+  return 'Require acceptance beyond the put-side level; this snapshot has no order-flow classification to confirm aggressor direction.';
+}
+
+export default function TradeSetupsPanel({ setups, gammaRegime }) {
   const rows = setups || [];
 
   const getBiasClass = (bias) => {
@@ -19,23 +38,34 @@ export default function TradeSetupsPanel({ setups }) {
   };
 
   return (
-    <section className="panel analysis-panel">
+    <section className="panel analysis-panel setup-panel">
       <div className="panel-heading">
-        <h3>Deterministic Trade Ideas</h3>
+        <div>
+          <p className="setup-eyebrow">Conditional scenario engine</p>
+          <h3>Deterministic Trade Ideas</h3>
+          <p className="setup-panel-note">Rules-based expressions around gamma concentration—not trade signals.</p>
+        </div>
+        <span className="setup-regime-pill">{formatRegime(gammaRegime)}</span>
       </div>
 
       {rows.length === 0 ? (
         <p className="status-text">No trade setup suggestions available for current data.</p>
       ) : (
         <div className="setups-grid">
-          {rows.map((setup) => (
+          {rows.map((setup, index) => (
             <article className={`setup-card ${getBiasClass(setup.bias)}`} key={setup.title}>
-              <p className="setup-title">{setup.title}</p>
-              <p className="setup-line setup-line-trade"><strong>Trade Idea:</strong> {setup.exact_trade}</p>
-              <p className="setup-line"><strong>Bias:</strong> {setup.bias}</p>
-              <p className="setup-line"><strong>Trigger:</strong> {setup.trigger}</p>
-              <p className="setup-line"><strong>Thesis:</strong> {setup.thesis}</p>
-              <p className="setup-line"><strong>Risk:</strong> {setup.risk}</p>
+              <div className="setup-card-header">
+                <span className="setup-index">0{index + 1}</span>
+                <span className="setup-bias-pill">{String(setup.bias || 'conditional').replaceAll('_', ' ')}</span>
+              </div>
+              <h4 className="setup-title">{setup.title}</h4>
+              <p className="setup-line setup-line-trade"><span>Trade expression</span>{setup.exact_trade}</p>
+              <div className="setup-detail-grid">
+                <p className="setup-line"><span>Trigger</span>{setup.trigger}</p>
+                <p className="setup-line setup-line--confirmation"><span>Confirmation</span>{confirmationFor(setup)}</p>
+                <p className="setup-line"><span>Thesis</span>{setup.thesis}</p>
+                <p className="setup-line setup-line--risk"><span>Invalidation / risk</span>{setup.risk}</p>
+              </div>
             </article>
           ))}
         </div>

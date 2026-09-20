@@ -87,6 +87,7 @@ class TradeSetup(BaseModel):
     thesis: str
     risk: str
     exact_trade: str
+    confirmation: Optional[str] = None
 
 
 class SpxGammaResponse(BaseModel):

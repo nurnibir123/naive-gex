@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 import { formatPrice } from '../lib/format';
 
 function formatCellValue(value, scale, suffix) {
@@ -62,6 +64,7 @@ export default function GammaHeatmap({
   spotPrice = null,
   gammaRegime = '',
 }) {
+  const heatmapWrapRef = useRef(null);
   const dates = heatmap?.dates || [];
   const rows = heatmap?.rows || [];
   const maxAbs = Number(heatmap?.max_abs_value || 0);
@@ -83,19 +86,45 @@ export default function GammaHeatmap({
 
   const regimeClass = regimeClassFromGamma(gammaRegime);
   const isLightTheme = document.documentElement.dataset.theme === 'light';
+  const peakLabel = title.toLowerCase().includes('delta') ? 'Peak Delta' : 'Peak Gamma';
+
+  useEffect(() => {
+    if (spotStrike === null || !heatmapWrapRef.current) {
+      return;
+    }
+
+    const spotRow = heatmapWrapRef.current.querySelector('[data-heatmap-spot="true"]');
+    if (!spotRow) {
+      return;
+    }
+
+    heatmapWrapRef.current.scrollTop = Math.max(
+      0,
+      spotRow.offsetTop - (heatmapWrapRef.current.clientHeight - spotRow.clientHeight) / 2,
+    );
+  }, [spotStrike, rows.length, dates.length]);
 
   return (
     <section className={`panel heatmap-panel ${regimeClass}`}>
       <div className="panel-heading">
-        <h3>{title}</h3>
-        {hasSpot ? <span className="spot-pill">Spot {formatPrice(numericSpot)}</span> : null}
+        <div>
+          <p className="heatmap-eyebrow">Exposure matrix</p>
+          <h3>{title}</h3>
+        </div>
+        <div className="heatmap-heading-actions">
+          {maxCell ? (
+            <span className="heatmap-max-pill">Peak {formatPrice(maxCell.strike)}</span>
+          ) : null}
+          {hasSpot ? <span className="spot-pill">Spot {formatPrice(numericSpot)}</span> : null}
+        </div>
       </div>
 
       {rows.length === 0 || dates.length === 0 ? (
         <p className="status-text">No heatmap data available.</p>
       ) : (
-        <div className="heatmap-wrap">
-          <table className="heatmap-table">
+        <>
+          <div className="heatmap-wrap" ref={heatmapWrapRef}>
+            <table className="heatmap-table" aria-label={title}>
             <thead>
               <tr>
                 <th>Strike</th>
@@ -108,7 +137,11 @@ export default function GammaHeatmap({
               {rows.map((row) => {
                 const isSpotRow = spotStrike !== null && Number(row.strike) === Number(spotStrike);
                 return (
-                <tr key={row.strike} className={isSpotRow ? 'heatmap-row-spot' : ''}>
+                <tr
+                  key={row.strike}
+                  className={isSpotRow ? 'heatmap-row-spot' : ''}
+                  data-heatmap-spot={isSpotRow ? 'true' : undefined}
+                >
                   <td className={`heatmap-strike${isSpotRow ? ' heatmap-strike-spot' : ''}`}>
                     {isSpotRow ? <span className="heatmap-spot-arrow">▶</span> : null}
                     {formatPrice(row.strike)}
@@ -125,7 +158,7 @@ export default function GammaHeatmap({
                     return (
                       <td
                         key={`${row.strike}-${day}`}
-                        className={`heatmap-cell${isMax ? ' heatmap-cell-max' : ''}${isSpotRow ? ' heatmap-cell-spot-row' : ''}`}
+                        className={`heatmap-cell ${value > 0 ? 'heatmap-cell-positive' : value < 0 ? 'heatmap-cell-negative' : 'heatmap-cell-neutral'}${isMax ? ' heatmap-cell-max' : ''}${isSpotRow ? ' heatmap-cell-spot-row' : ''}`}
                         style={{
                           background: isMax ? 'linear-gradient(135deg, #6d28d9, #9333ea)' : cellColor(value, maxAbs, isLightTheme),
                         }}
@@ -138,24 +171,36 @@ export default function GammaHeatmap({
                 </tr>
               )})}
             </tbody>
-          </table>
-          <div className="heatmap-legend" aria-label="Heatmap color legend">
-            <span className="heatmap-legend-title">Color meaning</span>
-            <span className="heatmap-legend-item">
-              <span className="heatmap-legend-swatch heatmap-legend-swatch--positive" />
-              Positive exposure
-            </span>
-            <span className="heatmap-legend-item">
-              <span className="heatmap-legend-swatch heatmap-legend-swatch--negative" />
-              Negative exposure
-            </span>
-            <span className="heatmap-legend-item">
-              <span className="heatmap-legend-swatch heatmap-legend-swatch--neutral" />
-              Near zero
-            </span>
-            <span className="heatmap-legend-note">Brighter colors indicate greater magnitude.</span>
+            </table>
           </div>
-        </div>
+          <div className="heatmap-legend" aria-label="Heatmap color legend">
+          <span className="heatmap-legend-title">Color meaning</span>
+          <span className="heatmap-legend-item">
+            <span className="heatmap-legend-swatch heatmap-legend-swatch--positive" />
+            Positive exposure
+          </span>
+          <span className="heatmap-legend-item">
+            <span className="heatmap-legend-swatch heatmap-legend-swatch--negative" />
+            Negative exposure
+          </span>
+          <span className="heatmap-legend-item">
+            <span className="heatmap-legend-swatch heatmap-legend-swatch--neutral" />
+            Near zero
+          </span>
+          <span className="heatmap-legend-note">Brighter colors indicate greater magnitude.</span>
+          {maxCell ? (
+            <span className="heatmap-key-level">
+              <i />
+              {peakLabel} {formatPrice(maxCell.strike)} · {maxCell.date} · {formatCellValue(maxCell.value, scale, suffix)}
+            </span>
+          ) : null}
+          <div className="heatmap-scale" aria-hidden="true">
+            <span>Negative</span>
+            <i />
+            <span>Positive</span>
+          </div>
+          </div>
+        </>
       )}
     </section>
   );

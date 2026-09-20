@@ -7,7 +7,6 @@ import { getDataDates, refreshSpxGamma } from './lib/api';
 
 export default function App() {
   const [refreshingGamma, setRefreshingGamma] = useState(false);
-  const [statusText, setStatusText] = useState('Ready');
   const [selectedDate, setSelectedDate] = useState('');
   const [availableDates, setAvailableDates] = useState([]);
   const [theme, setTheme] = useState(() => localStorage.getItem('naive-greeks-theme') || 'dark');
@@ -37,15 +36,13 @@ export default function App() {
 
   const triggerGammaRefresh = async () => {
     setRefreshingGamma(true);
-    setStatusText('Reloading Greeks data...');
     try {
       await refreshSpxGamma(selectedDate);
       await loadDates();
       window.dispatchEvent(new CustomEvent('elysium-gamma-refreshed'));
       window.dispatchEvent(new CustomEvent('elysium-data-refreshed'));
-      setStatusText('Greeks reloaded successfully');
     } catch (error) {
-      setStatusText(`Greeks reload failed: ${error.message}`);
+      console.error('Greeks reload failed:', error);
     } finally {
       setRefreshingGamma(false);
     }
@@ -57,7 +54,6 @@ export default function App() {
         <TopBar
           onRefreshGamma={triggerGammaRefresh}
           refreshingGamma={refreshingGamma}
-          statusText={statusText}
           selectedDate={selectedDate}
           availableDates={availableDates}
           onDateChange={setSelectedDate}
@@ -73,6 +69,37 @@ export default function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
+
+        <footer className="research-footer">
+          <div className="research-footer-intro">
+            <p className="research-footer-eyebrow">Research & methodology</p>
+            <h3>Frameworks behind the terminal</h3>
+            <p>These references informed the exposure model, hedging assumptions, volatility context, and strategy guardrails.</p>
+          </div>
+          <nav className="research-footer-links" aria-label="Research sources">
+            <a href="https://docs.gexbot.com/pdfs/cboe_dxto.pdf" target="_blank" rel="noreferrer">
+              <span>Cboe DXTO</span>
+              <small>Options volume, liquidity, and cash-equity impact</small>
+            </a>
+            <a href="https://docs.gexbot.com/pdfs/hau.pdf" target="_blank" rel="noreferrer">
+              <span>Hau Volatility Surface</span>
+              <small>Order flow, maker inventory, and surface tracking</small>
+            </a>
+            <a href="https://perfiliev.com/blog/how-to-calculate-gamma-exposure-and-zero-gamma-level/" target="_blank" rel="noreferrer">
+              <span>Perfiliev GEX Model</span>
+              <small>Gamma exposure and zero-gamma methodology</small>
+            </a>
+            <a href="https://moontower.ai/blog/moontower-on-gamma" target="_blank" rel="noreferrer">
+              <span>Moontower Meta</span>
+              <small>Dynamic delta hedging and gamma mechanics</small>
+            </a>
+            <a href="https://www.mheducation.com/highered/mhp/product/complete-guide-to-option-pricing-formulas-2e.html" target="_blank" rel="noreferrer">
+              <span>Espen Gaarder Haug</span>
+              <small>Analytical option-pricing formulas and higher-order Greeks</small>
+            </a>
+          </nav>
+          <p className="research-footer-note">Educational references only. The terminal’s calculations remain simplified estimates and do not represent a complete institutional options or order-flow model.</p>
+        </footer>
       </div>
     </div>
   );

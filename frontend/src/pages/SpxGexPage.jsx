@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import GammaHeatmap from '../components/GammaHeatmap';
 import GexByStrikeChart from '../components/GexByStrikeChart';
 import TradeSetupsPanel from '../components/TradeSetupsPanel';
-import { getSpxGamma, refreshSpxGamma } from '../lib/api';
+import { getSpxGamma } from '../lib/api';
 
 const REFRESH_EVENT = 'elysium-gamma-refreshed';
 
@@ -20,7 +20,6 @@ export default function SpxGexPage({ selectedDate }) {
   const [gamma, setGamma] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [refreshing, setRefreshing] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const ticker = useMemo(() => normalizeTicker(searchParams.get('ticker') || 'SPX'), [searchParams]);
@@ -41,21 +40,6 @@ export default function SpxGexPage({ selectedDate }) {
       setGamma(null);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const forceRefreshGamma = async () => {
-    setRefreshing(true);
-    setError('');
-    try {
-      const payload = await refreshSpxGamma(selectedDate, false, ticker);
-      setGamma(payload);
-      window.dispatchEvent(new CustomEvent(REFRESH_EVENT));
-      window.dispatchEvent(new CustomEvent('elysium-data-refreshed'));
-    } catch (err) {
-      setError(err.message || 'Failed to reload Greek exposure data.');
-    } finally {
-      setRefreshing(false);
     }
   };
 
@@ -99,9 +83,6 @@ export default function SpxGexPage({ selectedDate }) {
           <button type="button" className="topbar-btn" onClick={applyTicker}>
             Load Ticker
           </button>
-          <button type="button" className="topbar-btn" onClick={forceRefreshGamma} disabled={refreshing}>
-            {refreshing ? 'Refreshing...' : 'Refresh This Page'}
-          </button>
         </div>
       </div>
 
@@ -121,7 +102,7 @@ export default function SpxGexPage({ selectedDate }) {
 
       {!loading && !error ? (
         <>
-          <TradeSetupsPanel setups={gamma?.trade_setups || []} />
+          <TradeSetupsPanel setups={gamma?.trade_setups || []} gammaRegime={gamma?.gamma_regime} />
 
           <section className="profile-grid">
             <GexByStrikeChart
@@ -167,6 +148,7 @@ export default function SpxGexPage({ selectedDate }) {
           </section>
         </>
       ) : null}
+
     </section>
   );
 }

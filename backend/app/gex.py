@@ -723,6 +723,11 @@ def generate_trade_setups(
                 )
             ),
             "risk": "Break and acceptance outside the pin zone can invalidate the range setup.",
+            "confirmation": (
+                "Positive gamma and spot acceptance inside the pin zone support this scenario; in pivot-sensitive or negative-gamma regimes, treat mean reversion as lower confidence."
+                if gamma_regime == "positive_gamma_stable"
+                else "Require positive-gamma confirmation and stable implied volatility; this snapshot alone is not enough to justify a range trade."
+            ),
             "exact_trade": (
                 f"{ticker} {expiry} Iron Condor: Buy {neutral_put_long:.0f} Put / Sell {pin_low:.0f} Put / "
                 f"Sell {pin_high:.0f} Call / Buy {neutral_call_long:.0f} Call (1-lot structure)."
@@ -752,7 +757,8 @@ def generate_trade_setups(
                     else "Delta near spot is not strongly supportive, so upside follow-through may be less persistent."
                 )
             ),
-            "risk": "Failure back below the reclaimed wall can trap upside continuation entries.",
+            "risk": "Failure back below the reclaimed wall can trap upside continuation entries. A dealer-positioning estimate cannot confirm whether customer flow was bought or sold.",
+            "confirmation": "Require acceptance above the call-side gate plus aligned underlying price action and option-flow or volatility confirmation; those flow inputs are not present in this snapshot.",
             "exact_trade": (
                 f"{ticker} {expiry} Call Debit Spread: Buy {bull_long:.0f} Call / Sell {bull_short:.0f} Call (1-lot structure)."
                 if bull_long is not None and bull_short is not None
@@ -783,7 +789,8 @@ def generate_trade_setups(
                     else "Supportive delta can partially cushion downside acceleration unless the wall breaks decisively."
                 )
             ),
-            "risk": "Quick reclaim above the broken put wall can trigger short-covering and whipsaw.",
+            "risk": "Quick reclaim above the broken put wall can trigger short-covering and whipsaw. A dealer-positioning estimate cannot confirm whether customer flow was bought or sold.",
+            "confirmation": "Require acceptance below the put-side gate plus aligned underlying price action and option-flow or volatility confirmation; those flow inputs are not present in this snapshot.",
             "exact_trade": (
                 f"{ticker} {expiry} Put Debit Spread: Buy {bear_long:.0f} Put / Sell {bear_short:.0f} Put (1-lot structure)."
                 if bear_long is not None and bear_short is not None

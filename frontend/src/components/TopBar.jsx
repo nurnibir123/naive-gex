@@ -1,7 +1,6 @@
 export default function TopBar({
   onRefreshGamma,
   refreshingGamma,
-  statusText,
   selectedDate,
   availableDates,
   onDateChange,
@@ -13,6 +12,9 @@ export default function TopBar({
       <div>
         <h2>Naive Greeks Terminal</h2>
         <p>Options market maker exposure, actionable Greek levels, and heatmaps</p>
+        <p className="analytics-disclaimer">
+          Naive delta and gamma calculations for educational and research purposes; does not account for order flow, dealer inventory, volatility-surface dynamics, or other advanced institutional techniques.
+        </p>
       </div>
 
       <div className="topbar-actions">
@@ -33,9 +35,8 @@ export default function TopBar({
           </select>
         </label>
 
-        <span className="status-chip">{statusText || 'Ready'}</span>
         <button type="button" className="theme-toggle" onClick={onToggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
-          {theme === 'dark' ? '☀ Light' : '☾ Dark'}
+          {theme === 'dark' ? '☀' : '☾'} <span className="theme-toggle-label">{theme === 'dark' ? 'Light' : 'Dark'}</span>
         </button>
         <button type="button" className="topbar-btn" onClick={onRefreshGamma} disabled={refreshingGamma}>
           {refreshingGamma ? 'Reloading Greeks...' : 'Reload Greeks'}
