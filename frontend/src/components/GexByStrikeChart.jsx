@@ -50,9 +50,14 @@ export default function GexByStrikeChart({
 }) {
   const [showAllStrikes, setShowAllStrikes] = useState(false);
   const sorted = [...(data || [])].sort((a, b) => a.strike - b.strike);
-  const focusRange = 200;
-  const focused = spotPrice
-    ? sorted.filter((entry) => Math.abs(Number(entry.strike) - Number(spotPrice)) <= focusRange)
+  // A fixed point range is too wide for ETFs such as SPY and too narrow for
+  // some index chains. Keep a consistent number of nearby strikes instead.
+  const focusStrikeCount = 60;
+  const focused = spotPrice && sorted.length > focusStrikeCount
+    ? [...sorted]
+      .sort((a, b) => Math.abs(Number(a.strike) - Number(spotPrice)) - Math.abs(Number(b.strike) - Number(spotPrice)))
+      .slice(0, focusStrikeCount)
+      .sort((a, b) => a.strike - b.strike)
     : sorted;
   const canFocus = Boolean(spotPrice) && focused.length >= 12 && focused.length < sorted.length;
   const chartData = canFocus && !showAllStrikes ? focused : sorted;
