@@ -111,12 +111,6 @@ export default function GammaHeatmap({
           <p className="heatmap-eyebrow">Exposure matrix</p>
           <h3>{title}</h3>
         </div>
-        <div className="heatmap-heading-actions">
-          {maxCell ? (
-            <span className="heatmap-max-pill">Peak {formatPrice(maxCell.strike)}</span>
-          ) : null}
-          {hasSpot ? <span className="spot-pill">Spot {formatPrice(numericSpot)}</span> : null}
-        </div>
       </div>
 
       {rows.length === 0 || dates.length === 0 ? (

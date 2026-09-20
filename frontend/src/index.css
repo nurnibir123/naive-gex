@@ -1790,6 +1790,58 @@ html[data-theme='dark'] .heatmap-legend-note {
   color: #777777;
 }
 
+/* Keep the heatmap language consistent in light mode: positive exposure is
+   green-to-yellow, negative exposure is blue-to-purple. */
+html[data-theme='light'] .heatmap-panel--trending {
+  border-color: #86c9a3;
+  background: linear-gradient(180deg, #eefaf1 0%, #ffffff 42%);
+}
+
+html[data-theme='light'] .heatmap-panel--range {
+  border-color: #edb36f;
+  background: linear-gradient(180deg, #fff8ec 0%, #ffffff 42%);
+}
+
+html[data-theme='light'] .heatmap-panel--noisy {
+  border-color: #e7a0a0;
+  background: linear-gradient(180deg, #fff1f1 0%, #ffffff 42%);
+}
+
+html[data-theme='light'] .heatmap-cell-positive {
+  color: #16351f;
+  text-shadow: none;
+}
+
+html[data-theme='light'] .heatmap-cell-negative,
+html[data-theme='light'] .heatmap-cell-max {
+  color: #ffffff;
+  text-shadow: 0 1px 1px rgba(15, 23, 42, 0.58);
+}
+
+html[data-theme='light'] .heatmap-cell-neutral {
+  color: #334155;
+  text-shadow: none;
+}
+
+html[data-theme='light'] .heatmap-legend-swatch--positive {
+  background: linear-gradient(135deg, #22c55e, #facc15);
+  border-color: #86b98d;
+}
+
+html[data-theme='light'] .heatmap-legend-swatch--negative {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  border-color: #8297d8;
+}
+
+html[data-theme='light'] .heatmap-legend-swatch--neutral {
+  background: #e5e7eb;
+  border-color: #b7c0cc;
+}
+
+html[data-theme='light'] .heatmap-scale i {
+  background: linear-gradient(90deg, #2563eb 0%, #7c3aed 24%, #e5e7eb 50%, #22c55e 76%, #facc15 100%);
+}
+
 html[data-theme='dark'] .analytics-loading {
   background: #050505;
 }

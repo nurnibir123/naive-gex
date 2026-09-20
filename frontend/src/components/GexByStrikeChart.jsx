@@ -50,14 +50,31 @@ export default function GexByStrikeChart({
 }) {
   const [showAllStrikes, setShowAllStrikes] = useState(false);
   const sorted = [...(data || [])].sort((a, b) => a.strike - b.strike);
-  // A fixed point range is too wide for ETFs such as SPY and too narrow for
-  // some index chains. Keep a consistent number of nearby strikes instead.
-  const focusStrikeCount = 60;
-  const focused = spotPrice && sorted.length > focusStrikeCount
-    ? [...sorted]
-      .sort((a, b) => Math.abs(Number(a.strike) - Number(spotPrice)) - Math.abs(Number(b.strike) - Number(spotPrice)))
-      .slice(0, focusStrikeCount)
-      .sort((a, b) => a.strike - b.strike)
+  // Build the focused window around the actual structure, not a fixed number
+  // of rows. This keeps the spot, walls, and gamma flip visible across ETFs
+  // and index chains with very different strike spacing.
+  const numericSpot = Number(spotPrice);
+  const criticalLevels = [
+    numericSpot,
+    keyLevels?.call_wall,
+    keyLevels?.put_wall,
+    keyLevels?.gamma_flip,
+  ]
+    .filter((level) => level !== null && level !== undefined && level !== '')
+    .map(Number)
+    .filter(Number.isFinite);
+  const strikeSteps = sorted
+    .map((entry, index) => index > 0 ? Number(entry.strike) - Number(sorted[index - 1].strike) : null)
+    .filter((step) => step > 0)
+    .sort((a, b) => a - b);
+  const strikeStep = strikeSteps.length
+    ? strikeSteps[Math.floor(strikeSteps.length / 2)]
+    : 1;
+  const structurePadding = Math.max(strikeStep * 6, Math.abs(numericSpot) * 0.01);
+  const structureLow = criticalLevels.length ? Math.min(...criticalLevels) - structurePadding : null;
+  const structureHigh = criticalLevels.length ? Math.max(...criticalLevels) + structurePadding : null;
+  const focused = structureLow !== null && structureHigh !== null
+    ? sorted.filter((entry) => Number(entry.strike) >= structureLow && Number(entry.strike) <= structureHigh)
     : sorted;
   const canFocus = Boolean(spotPrice) && focused.length >= 12 && focused.length < sorted.length;
   const chartData = canFocus && !showAllStrikes ? focused : sorted;
