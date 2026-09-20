@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
 import SpxGexPage from './pages/SpxGexPage';
 import { getDataDates, refreshSpxGamma } from './lib/api';
@@ -11,6 +10,12 @@ export default function App() {
   const [statusText, setStatusText] = useState('Ready');
   const [selectedDate, setSelectedDate] = useState('');
   const [availableDates, setAvailableDates] = useState([]);
+  const [theme, setTheme] = useState(() => localStorage.getItem('naive-greeks-theme') || 'dark');
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('naive-greeks-theme', theme);
+  }, [theme]);
 
   const loadDates = async () => {
     try {
@@ -48,8 +53,6 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Sidebar />
-
       <div className="content-shell">
         <TopBar
           onRefreshGamma={triggerGammaRefresh}
@@ -58,13 +61,15 @@ export default function App() {
           selectedDate={selectedDate}
           availableDates={availableDates}
           onDateChange={setSelectedDate}
+          theme={theme}
+          onToggleTheme={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
         />
 
         <div className="content-body">
           <Routes>
-            <Route path="/" element={<Navigate to="/spx-gamma" replace />} />
+            <Route path="/" element={<SpxGexPage selectedDate={selectedDate} />} />
             <Route path="/spx-gamma" element={<SpxGexPage selectedDate={selectedDate} />} />
-            <Route path="/spx-gex" element={<Navigate to="/spx-gamma" replace />} />
+            <Route path="/spx-gex" element={<SpxGexPage selectedDate={selectedDate} />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>

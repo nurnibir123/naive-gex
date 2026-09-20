@@ -66,6 +66,12 @@ export default function GexByStrikeChart({
             domain={['dataMin', 'dataMax']}
           />
 
+          <Bar dataKey={valueKey} barSize={12} radius={[0, 5, 5, 0]}>
+            {sorted.map((entry) => (
+              <Cell key={`cell-${title}-${entry.strike}`} fill={entry[valueKey] >= 0 ? '#2dd4bf' : '#f472b6'} fillOpacity={0.9} />
+            ))}
+          </Bar>
+
           <ReferenceLine x={0} stroke="#dbeafe" strokeOpacity={0.7} />
 
           <Tooltip
@@ -118,11 +124,6 @@ export default function GexByStrikeChart({
             />
           ) : null}
 
-          <Bar dataKey={valueKey} barSize={12} radius={[0, 5, 5, 0]}>
-            {sorted.map((entry) => (
-              <Cell key={`cell-${title}-${entry.strike}`} fill={entry[valueKey] >= 0 ? '#2dd4bf' : '#f472b6'} fillOpacity={0.9} />
-            ))}
-          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </section>

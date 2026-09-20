@@ -5,6 +5,8 @@ export default function TopBar({
   selectedDate,
   availableDates,
   onDateChange,
+  theme,
+  onToggleTheme,
 }) {
   return (
     <header className="topbar">
@@ -32,6 +34,9 @@ export default function TopBar({
         </label>
 
         <span className="status-chip">{statusText || 'Ready'}</span>
+        <button type="button" className="theme-toggle" onClick={onToggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+          {theme === 'dark' ? '☀ Light' : '☾ Dark'}
+        </button>
         <button type="button" className="topbar-btn" onClick={onRefreshGamma} disabled={refreshingGamma}>
           {refreshingGamma ? 'Reloading Greeks...' : 'Reload Greeks'}
         </button>
