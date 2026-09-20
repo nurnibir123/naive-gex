@@ -23,7 +23,7 @@ export default function App() {
   useEffect(() => {
     let cancelled = false;
 
-    getDataDates(ticker)
+    const loadTickerDates = () => getDataDates(ticker)
       .then((payload) => {
         if (cancelled) return;
         const dates = Array.isArray(payload?.dates) ? payload.dates : [];
@@ -37,8 +37,16 @@ export default function App() {
         if (!cancelled) setAvailableDates([]);
       });
 
+    const handleGammaLoaded = (event) => {
+      if (event.detail?.ticker === ticker) loadTickerDates();
+    };
+
+    loadTickerDates();
+    window.addEventListener('elysium-gamma-loaded', handleGammaLoaded);
+
     return () => {
       cancelled = true;
+      window.removeEventListener('elysium-gamma-loaded', handleGammaLoaded);
     };
   }, [ticker]);
 

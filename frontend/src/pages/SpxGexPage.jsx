@@ -26,6 +26,9 @@ export default function SpxGexPage({ selectedDate }) {
     try {
       const payload = await getSpxGamma(selectedDate, ticker);
       setGamma(payload);
+      window.dispatchEvent(new CustomEvent('elysium-gamma-loaded', {
+        detail: { ticker: payload?.ticker || ticker },
+      }));
     } catch (err) {
       setError(err.message || 'Failed to load Greek exposure data.');
       setGamma(null);
