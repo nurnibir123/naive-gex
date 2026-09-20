@@ -1,6 +1,6 @@
-# Naive Greeks Terminal
+# Naive GEX Terminal
 
-Naive Greeks Terminal is a local full-stack SPX options positioning dashboard built with FastAPI and React.
+Naive GEX Terminal is a local full-stack SPX options positioning dashboard built with FastAPI and React.
 
 ## Product Scope
 

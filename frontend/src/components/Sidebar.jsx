@@ -9,7 +9,7 @@ export default function Sidebar() {
     <aside className="sidebar">
       <div className="brand-block">
         <p className="brand-kicker">Options Positioning Terminal</p>
-        <h1>Naive Greeks Terminal</h1>
+        <h1>Naive GEX Terminal</h1>
       </div>
 
       <nav className="sidebar-nav" aria-label="Primary">

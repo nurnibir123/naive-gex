@@ -11,7 +11,7 @@ from .models import (
     SpxGammaResponse,
 )
 
-app = FastAPI(title="Naive Greeks Terminal API", version="5.0.0")
+app = FastAPI(title="Naive GEX Terminal API", version="5.0.0")
 
 app.add_middleware(
     CORSMiddleware,

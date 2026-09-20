@@ -93,7 +93,7 @@ body,
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1rem 1.4rem;
+  padding: 1rem 4.8rem 1rem 1.4rem;
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(8px);
   background: rgba(9, 14, 24, 0.92);
@@ -114,9 +114,22 @@ body,
   display: flex;
   gap: 0.6rem;
   align-items: center;
+  margin-right: 0.3rem;
+}
+
+.market-data-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+}
+
+.market-control {
+  display: grid;
+  gap: 0.2rem;
 }
 
 .date-picker-wrap {
+  position: relative;
   display: grid;
   gap: 0.2rem;
 }
@@ -133,6 +146,106 @@ body,
   border-radius: 8px;
   padding: 0.36rem 0.48rem;
   font-size: 0.84rem;
+}
+
+.date-calendar-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 11.5rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.date-calendar {
+  position: absolute;
+  top: calc(100% + 0.65rem);
+  right: 0;
+  z-index: 50;
+  width: 18rem;
+  padding: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface, #101827);
+  color: var(--text);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+}
+
+.date-calendar-heading,
+.date-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.25rem;
+}
+
+.date-calendar-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.65rem;
+}
+
+.date-calendar-heading strong {
+  text-align: center;
+  font-size: 0.88rem;
+}
+
+.date-calendar-heading button,
+.date-calendar-day {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  aspect-ratio: 1;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+}
+
+.date-calendar-heading button {
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.date-calendar-heading button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.date-calendar-weekday {
+  display: grid;
+  place-items: center;
+  height: 1.75rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+.date-calendar-day {
+  font-size: 0.78rem;
+}
+
+.date-calendar-day:not(:disabled) {
+  border-color: var(--border);
+  cursor: pointer;
+}
+
+.date-calendar-day:not(:disabled):hover,
+.date-calendar-day.is-selected {
+  border-color: var(--accent, #42d6c5);
+  background: rgba(50, 197, 176, 0.16);
+}
+
+.date-calendar-day:disabled {
+  color: var(--muted);
+  opacity: 0.3;
+}
+
+.date-calendar-footnote {
+  margin: 0.7rem 0 0;
+  color: var(--muted);
+  font-size: 0.68rem;
+  text-align: center;
 }
 
 .status-chip {
@@ -160,13 +273,22 @@ body,
 }
 
 .theme-toggle {
+  position: absolute;
+  top: 0.8rem;
+  right: 1.2rem;
+  display: grid;
+  place-items: center;
+  width: 2.65rem;
+  height: 2.65rem;
+  padding: 0;
   border: 1px solid var(--border);
   background: rgba(20, 28, 45, 0.8);
   color: var(--text);
-  border-radius: 10px;
-  padding: 0.5rem 0.7rem;
+  border-radius: 50%;
+  font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
+  z-index: 2;
 }
 
 .content-body {
@@ -440,6 +562,7 @@ body,
   .topbar {
     flex-direction: column;
     align-items: flex-start;
+    padding-right: 4.8rem;
   }
 
   .topbar-actions {
@@ -537,6 +660,48 @@ body,
 .ticker-input:focus {
   outline: 2px solid var(--accent);
   border-color: transparent;
+}
+
+.ticker-select-wrap {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.ticker-select {
+  min-width: 8rem;
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .topbar-actions {
+    display: flex;
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .market-data-controls {
+    display: grid;
+    grid-template-columns: minmax(7rem, 0.75fr) minmax(11rem, 1.25fr);
+    width: 100%;
+  }
+
+  .market-data-controls .date-picker-wrap,
+  .market-control {
+    width: 100%;
+  }
+
+  .market-data-controls .date-select,
+  .market-data-controls .ticker-select {
+    width: 100%;
+    min-width: 0;
+    min-height: 2.5rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .market-data-controls {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
 }
 
 .profile-grid {
@@ -968,20 +1133,11 @@ body,
     width: 100%;
   }
 
-  .topbar-actions .theme-toggle {
-    width: auto;
-    min-height: 2.5rem;
-    padding-inline: 0.8rem;
-  }
-
   .topbar-actions .topbar-btn {
     width: auto;
     min-height: 2.5rem;
   }
 
-  .theme-toggle-label {
-    display: none;
-  }
 }
 
 @media (max-width: 600px) {
@@ -1012,7 +1168,7 @@ body,
   .topbar {
     position: relative;
     gap: 0.75rem;
-    padding: 0.85rem;
+    padding: 0.85rem 3.8rem 0.85rem 0.85rem;
     width: 100%;
   }
 
@@ -1066,8 +1222,10 @@ body,
   }
 
   .theme-toggle {
-    width: 100%;
-    min-height: 2.5rem;
+    top: 0.7rem;
+    right: 0.75rem;
+    width: 2.4rem;
+    height: 2.4rem;
   }
 
   .content-body {

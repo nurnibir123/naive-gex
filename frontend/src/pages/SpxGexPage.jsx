@@ -5,15 +5,11 @@ import GammaHeatmap from '../components/GammaHeatmap';
 import GexByStrikeChart from '../components/GexByStrikeChart';
 import TradeSetupsPanel from '../components/TradeSetupsPanel';
 import { getSpxGamma } from '../lib/api';
-
-const REFRESH_EVENT = 'elysium-gamma-refreshed';
+import { SUPPORTED_TICKERS } from '../lib/tickers';
 
 function normalizeTicker(value) {
   const clean = String(value || 'SPX').trim().toUpperCase();
-  if (!clean) {
-    return 'SPX';
-  }
-  return clean.replace(/[^A-Z0-9_.-]/g, '');
+  return SUPPORTED_TICKERS.includes(clean) ? clean : 'SPX';
 }
 
 export default function SpxGexPage({ selectedDate }) {
@@ -21,13 +17,8 @@ export default function SpxGexPage({ selectedDate }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const ticker = useMemo(() => normalizeTicker(searchParams.get('ticker') || 'SPX'), [searchParams]);
-  const [tickerInput, setTickerInput] = useState(ticker);
-
-  useEffect(() => {
-    setTickerInput(ticker);
-  }, [ticker]);
 
   const loadGamma = async () => {
     setLoading(true);
@@ -47,23 +38,6 @@ export default function SpxGexPage({ selectedDate }) {
     loadGamma();
   }, [selectedDate, ticker]);
 
-  useEffect(() => {
-    const handler = () => loadGamma();
-    window.addEventListener(REFRESH_EVENT, handler);
-    return () => window.removeEventListener(REFRESH_EVENT, handler);
-  }, [selectedDate, ticker]);
-
-  const applyTicker = () => {
-    const next = normalizeTicker(tickerInput);
-    const nextParams = new URLSearchParams(searchParams);
-    if (next === 'SPX') {
-      nextParams.delete('ticker');
-    } else {
-      nextParams.set('ticker', next);
-    }
-    setSearchParams(nextParams);
-  };
-
   return (
     <section className="page">
       <div className="page-header page-header-split">
@@ -72,18 +46,6 @@ export default function SpxGexPage({ selectedDate }) {
           <p>Trader-oriented market maker exposure dashboard with deterministic setups and dual strike profiles.</p>
         </div>
 
-        <div className="ticker-controls">
-          <input
-            type="text"
-            className="ticker-input"
-            value={tickerInput}
-            onChange={(event) => setTickerInput(event.target.value)}
-            placeholder="Ticker (e.g. SPX, NVDA)"
-          />
-          <button type="button" className="topbar-btn" onClick={applyTicker}>
-            Load Ticker
-          </button>
-        </div>
       </div>
 
       {loading ? (

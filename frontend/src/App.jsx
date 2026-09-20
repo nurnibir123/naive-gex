@@ -1,59 +1,51 @@
-import { useEffect, useState } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import TopBar from './components/TopBar';
 import SpxGexPage from './pages/SpxGexPage';
-import { getDataDates, refreshSpxGamma } from './lib/api';
+import { getDataDates } from './lib/api';
 
 export default function App() {
-  const [refreshingGamma, setRefreshingGamma] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [availableDates, setAvailableDates] = useState([]);
   const [theme, setTheme] = useState(() => localStorage.getItem('naive-greeks-theme') || 'dark');
+  const location = useLocation();
+  const ticker = useMemo(() => {
+    const requested = new URLSearchParams(location.search).get('ticker') || 'SPX';
+    return requested.trim().toUpperCase().replace(/[^A-Z0-9_.-]/g, '') || 'SPX';
+  }, [location.search]);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem('naive-greeks-theme', theme);
   }, [theme]);
 
-  const loadDates = async () => {
-    try {
-      const payload = await getDataDates();
-      const dates = Array.isArray(payload?.dates) ? payload.dates : [];
-      setAvailableDates(dates);
-      if (!selectedDate && payload?.latest) {
-        setSelectedDate(payload.latest);
-      }
-    } catch {
-      setAvailableDates([]);
-    }
-  };
-
   useEffect(() => {
-    loadDates();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    let cancelled = false;
 
-  const triggerGammaRefresh = async () => {
-    setRefreshingGamma(true);
-    try {
-      await refreshSpxGamma(selectedDate);
-      await loadDates();
-      window.dispatchEvent(new CustomEvent('elysium-gamma-refreshed'));
-      window.dispatchEvent(new CustomEvent('elysium-data-refreshed'));
-    } catch (error) {
-      console.error('Greeks reload failed:', error);
-    } finally {
-      setRefreshingGamma(false);
-    }
-  };
+    getDataDates(ticker)
+      .then((payload) => {
+        if (cancelled) return;
+        const dates = Array.isArray(payload?.dates) ? payload.dates : [];
+        const dateValues = new Set(dates.map((entry) => entry.iso));
+        setAvailableDates(dates);
+        setSelectedDate((current) => (
+          current && dateValues.has(current) ? current : payload?.latest || ''
+        ));
+      })
+      .catch(() => {
+        if (!cancelled) setAvailableDates([]);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [ticker]);
 
   return (
     <div className="app-shell">
       <div className="content-shell">
         <TopBar
-          onRefreshGamma={triggerGammaRefresh}
-          refreshingGamma={refreshingGamma}
           selectedDate={selectedDate}
           availableDates={availableDates}
           onDateChange={setSelectedDate}
