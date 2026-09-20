@@ -67,9 +67,6 @@ def _resolve_date_key(date_input: str | None, prefer_latest: bool = True, ticker
 
 
 def list_available_gamma_dates(ticker: str = "SPX") -> list[str]:
-    if not DATA_DIR.exists():
-        return []
-
     normalized = _normalize_ticker(ticker)
     keys: list[str] = []
     prefix = f"{PROCESSED_PREFIX}_{normalized}_"

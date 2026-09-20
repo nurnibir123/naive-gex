@@ -23,22 +23,32 @@ export default function App() {
   useEffect(() => {
     let cancelled = false;
 
-    const loadTickerDates = () => getDataDates(ticker)
+    const loadTickerDates = (snapshotDate = '') => getDataDates(ticker)
       .then((payload) => {
         if (cancelled) return;
         const dates = Array.isArray(payload?.dates) ? payload.dates : [];
+        if (snapshotDate && !dates.some((entry) => entry.iso === snapshotDate)) {
+          dates.push({ iso: snapshotDate, key: snapshotDate });
+        }
         const dateValues = new Set(dates.map((entry) => entry.iso));
         setAvailableDates(dates);
         setSelectedDate((current) => (
-          current && dateValues.has(current) ? current : payload?.latest || ''
+          current && dateValues.has(current) ? current : payload?.latest || snapshotDate || ''
         ));
       })
       .catch(() => {
-        if (!cancelled) setAvailableDates([]);
+        if (!cancelled) {
+          setAvailableDates(snapshotDate ? [{ iso: snapshotDate, key: snapshotDate }] : []);
+          setSelectedDate(snapshotDate);
+        }
       });
 
     const handleGammaLoaded = (event) => {
-      if (event.detail?.ticker === ticker) loadTickerDates();
+      if (event.detail?.ticker !== ticker) return;
+      const dateKey = String(event.detail?.dateKey || '');
+      const match = dateKey.match(/^(\d{2})-(\d{2})-(\d{4})$/);
+      const snapshotDate = match ? `${match[3]}-${match[1]}-${match[2]}` : '';
+      loadTickerDates(snapshotDate);
     };
 
     loadTickerDates();

@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 from pathlib import Path
 from typing import Any
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+logger = logging.getLogger(__name__)
 
 
 class SnapshotStore:
@@ -85,19 +87,31 @@ class VercelBlobSnapshotStore(SnapshotStore):
 
     def list_pathnames(self, prefix: str) -> list[str]:
         try:
-            listing = self.client.list_objects(prefix=prefix)
-            blobs = getattr(listing, "blobs", None)
-            if blobs is None and isinstance(listing, dict):
-                blobs = listing.get("blobs", [])
             names: list[str] = []
-            for blob in blobs or []:
-                pathname = getattr(blob, "pathname", None)
-                if pathname is None and isinstance(blob, dict):
-                    pathname = blob.get("pathname")
-                if pathname:
-                    names.append(str(pathname))
+            cursor = None
+            while True:
+                listing = self.client.list_objects(prefix=prefix, limit=1000, cursor=cursor)
+                blobs = getattr(listing, "blobs", None)
+                if blobs is None and isinstance(listing, dict):
+                    blobs = listing.get("blobs", [])
+                for blob in blobs or []:
+                    pathname = getattr(blob, "pathname", None)
+                    if pathname is None and isinstance(blob, dict):
+                        pathname = blob.get("pathname")
+                    if pathname:
+                        names.append(str(pathname))
+
+                has_more = getattr(listing, "has_more", None)
+                next_cursor = getattr(listing, "cursor", None)
+                if isinstance(listing, dict):
+                    has_more = listing.get("has_more", has_more)
+                    next_cursor = listing.get("cursor", next_cursor)
+                if not has_more or not next_cursor:
+                    break
+                cursor = next_cursor
             return names
-        except Exception:  # noqa: BLE001 - an unavailable cache behaves as empty
+        except Exception:  # noqa: BLE001 - keep the API available if the archive is unavailable
+            logger.exception("Unable to list Vercel Blob snapshots for prefix %s", prefix)
             return []
 
 
