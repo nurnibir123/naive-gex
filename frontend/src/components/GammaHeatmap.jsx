@@ -22,7 +22,7 @@ function rgba(color, alpha) {
   return `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`;
 }
 
-function cellColor(value, maxAbs) {
+function cellColor(value, maxAbs, isLightTheme = false) {
   if (!maxAbs || maxAbs <= 0) {
     return 'rgba(28, 33, 45, 0.9)';
   }
@@ -31,13 +31,13 @@ function cellColor(value, maxAbs) {
   if (value > 0) {
     // Positive exposure: green -> yellow
     const positive = mixColor({ r: 34, g: 197, b: 94 }, { r: 250, g: 204, b: 21 }, intensity);
-    const alpha = 0.24 + intensity * 0.64;
+    const alpha = isLightTheme ? 0.62 + intensity * 0.28 : 0.24 + intensity * 0.64;
     return rgba(positive, alpha);
   }
   if (value < 0) {
     // Negative exposure: blue -> purple
     const negative = mixColor({ r: 59, g: 130, b: 246 }, { r: 126, g: 34, b: 206 }, intensity);
-    const alpha = 0.24 + intensity * 0.64;
+    const alpha = isLightTheme ? 0.62 + intensity * 0.28 : 0.24 + intensity * 0.64;
     return rgba(negative, alpha);
   }
   return 'rgba(28, 33, 45, 0.9)';
@@ -82,6 +82,7 @@ export default function GammaHeatmap({
       : null;
 
   const regimeClass = regimeClassFromGamma(gammaRegime);
+  const isLightTheme = document.documentElement.dataset.theme === 'light';
 
   return (
     <section className={`panel heatmap-panel ${regimeClass}`}>
@@ -126,7 +127,7 @@ export default function GammaHeatmap({
                         key={`${row.strike}-${day}`}
                         className={`heatmap-cell${isMax ? ' heatmap-cell-max' : ''}${isSpotRow ? ' heatmap-cell-spot-row' : ''}`}
                         style={{
-                          background: isMax ? 'linear-gradient(135deg, #7e22ce, #a855f7)' : cellColor(value, maxAbs),
+                          background: isMax ? 'linear-gradient(135deg, #6d28d9, #9333ea)' : cellColor(value, maxAbs, isLightTheme),
                         }}
                         title={`${day} @ ${row.strike}: ${value.toFixed(4)}${tooltipSuffix}`}
                       >

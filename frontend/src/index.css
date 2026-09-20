@@ -1000,3 +1000,78 @@ html[data-theme='light'] .analytics-loading-title {
 html[data-theme='light'] .analytics-loading {
   background: linear-gradient(135deg, #ffffff, #f1f6fb);
 }
+
+html[data-theme='light'] .setup-card {
+  color: #243047;
+  background: #ffffff;
+}
+
+html[data-theme='light'] .setup-card--neutral {
+  background: linear-gradient(160deg, #f3efff, #ffffff);
+}
+
+html[data-theme='light'] .setup-card--bullish {
+  background: linear-gradient(160deg, #e9fbf3, #ffffff);
+}
+
+html[data-theme='light'] .setup-card--bearish {
+  background: linear-gradient(160deg, #fff0f2, #ffffff);
+}
+
+html[data-theme='light'] .setup-card--momentum {
+  background: linear-gradient(160deg, #fff7e6, #ffffff);
+}
+
+html[data-theme='light'] .setup-title,
+html[data-theme='light'] .setup-line,
+html[data-theme='light'] .setup-line-trade {
+  color: #243047;
+}
+
+html[data-theme='light'] .setup-line-trade {
+  border-left-color: #b8c5d6;
+}
+
+html[data-theme='light'] .heatmap-panel--trending,
+html[data-theme='light'] .heatmap-panel--range,
+html[data-theme='light'] .heatmap-panel--noisy {
+  background: #ffffff;
+}
+
+html[data-theme='light'] .heatmap-table th,
+html[data-theme='light'] .heatmap-table td {
+  border-color: #cbd5e1;
+}
+
+html[data-theme='light'] .heatmap-table thead th {
+  background: #e8eef6;
+  color: #26334a;
+}
+
+html[data-theme='light'] .heatmap-strike {
+  background: #f4f7fb;
+  color: #26334a;
+}
+
+html[data-theme='light'] .heatmap-strike-spot {
+  color: #123b73;
+  background: linear-gradient(90deg, #dbeafe, #f4f7fb);
+}
+
+html[data-theme='light'] .heatmap-spot-tag {
+  background: #bfdbfe;
+  color: #1e3a8a;
+}
+
+html[data-theme='light'] .heatmap-cell,
+html[data-theme='light'] .heatmap-cell-spot-row,
+html[data-theme='light'] .heatmap-cell-max {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(15, 23, 42, 0.75);
+}
+
+html[data-theme='light'] .heatmap-legend,
+html[data-theme='light'] .heatmap-legend-title,
+html[data-theme='light'] .heatmap-legend-note {
+  color: #526176;
+}
