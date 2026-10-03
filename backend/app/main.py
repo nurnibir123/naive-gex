@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from fastapi import FastAPI, HTTPException, Query
+import os
+
+from fastapi import FastAPI, Header, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 from .date_utils import is_market_closed_now, iso_from_key
@@ -30,6 +32,21 @@ app.add_middleware(
 @app.get("/api/health", response_model=HealthResponse)
 def health() -> HealthResponse:
     return HealthResponse(ok=True)
+
+
+@app.get("/api/cron/refresh")
+def refresh_cron(authorization: str | None = Header(default=None)) -> dict[str, object]:
+    secret = os.getenv("CRON_SECRET")
+    if secret and authorization != f"Bearer {secret}":
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    payload = get_spx_gamma_dashboard_payload(force_refresh=True, ticker="SPX")
+    return {
+        "ok": True,
+        "ticker": payload["ticker"],
+        "date_key": payload["date_key"],
+        "option_count": payload["option_count"],
+    }
 
 
 @app.get("/api/gex/spx", response_model=SpxGammaResponse)
