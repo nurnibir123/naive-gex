@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import math
 import re
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -155,50 +154,6 @@ def _prepare_options_frame(rows: list[dict[str, Any]]) -> pd.DataFrame:
     return frame.dropna(subset=["type", "expiration", "strike"]).copy()
 
 
-def _normal_pdf(value: float) -> float:
-    return math.exp(-0.5 * value * value) / math.sqrt(2 * math.pi)
-
-
-def _normal_cdf(value: float) -> float:
-    return 0.5 * (1 + math.erf(value / math.sqrt(2)))
-
-
-def _black_scholes_greeks(spot: float, strike: float, years: float, vol: float, option_type: str) -> tuple[float, float]:
-    """Return European delta and gamma; rates/dividend yield are neutral by design."""
-    if spot <= 0 or strike <= 0 or years <= 0 or vol <= 0:
-        return (1.0 if option_type == "C" and spot > strike else 0.0, 0.0)
-    sigma_root_t = vol * math.sqrt(years)
-    d1 = (math.log(spot / strike) + 0.5 * vol * vol * years) / sigma_root_t
-    gamma = _normal_pdf(d1) / (spot * sigma_root_t)
-    call_delta = _normal_cdf(d1)
-    return (call_delta if option_type == "C" else call_delta - 1.0, gamma)
-
-
-def _years_to_expiration(expiration: pd.Timestamp, valuation_date: pd.Timestamp) -> float:
-    # Use a calendar clock with a one-day floor for expiry-day options.
-    return max((expiration - valuation_date).total_seconds() / (365.25 * 24 * 3600), 1 / 365.25)
-
-
-def _recalculate_surface_greeks(spot_price: float, frame: pd.DataFrame, valuation_date: pd.Timestamp) -> pd.DataFrame:
-    """Prefer internally consistent BS Greeks when valid IV is available."""
-    output = frame.copy()
-    if output.empty or "implied_vol" not in output:
-        return output
-    for index, row in output.iterrows():
-        if row["implied_vol"] <= 0:
-            continue
-        delta, gamma = _black_scholes_greeks(
-            spot_price,
-            float(row["strike"]),
-            _years_to_expiration(pd.Timestamp(row["expiration"]), valuation_date),
-            float(row["implied_vol"]),
-            row["type"],
-        )
-        output.at[index, "delta"] = delta
-        output.at[index, "gamma"] = gamma
-    return output
-
-
 def _compute_gex_columns(spot_price: float, frame: pd.DataFrame) -> pd.DataFrame:
     if frame.empty:
         frame["gex"] = []
@@ -319,26 +274,15 @@ def compute_delta_by_strike(options_frame: pd.DataFrame, spot_price: float) -> l
 
 
 def compute_gamma_profile(options_frame: pd.DataFrame, spot_price: float) -> tuple[list[dict[str, float]], float | None]:
-    """Revalue gamma across spot levels and interpolate the nearest zero crossing."""
+    """Estimate the profile using the reported per-contract gamma values."""
     if options_frame.empty or spot_price <= 0:
         return [], None
     levels = [spot_price * (0.80 + index * 0.40 / 80) for index in range(81)]
-    valuation_date = pd.Timestamp.utcnow().tz_localize(None)
     profile: list[dict[str, float]] = []
     for level in levels:
         total = 0.0
         for _, row in options_frame.iterrows():
-            vol = float(row.get("implied_vol", 0) or 0)
-            if vol > 0:
-                _, gamma = _black_scholes_greeks(
-                    level,
-                    float(row["strike"]),
-                    _years_to_expiration(pd.Timestamp(row["expiration"]), valuation_date),
-                    vol,
-                    row["type"],
-                )
-            else:
-                gamma = float(row["gamma"] or 0)
+            gamma = float(row["gamma"] or 0)
             signed_gamma = gamma * float(row["open_interest"]) * CONTRACT_SIZE * level * level * 0.01
             total += signed_gamma if row["type"] == "C" else -signed_gamma
         profile.append({"spot": float(level), "gex_bn": total / 1_000_000_000})
@@ -863,7 +807,6 @@ def get_spx_gamma_dashboard_payload(
     spot_price = _extract_spot_price(data_blob)
 
     options_frame = _prepare_options_frame(_extract_options_rows(data_blob))
-    options_frame = _recalculate_surface_greeks(spot_price, options_frame, pd.Timestamp.utcnow().tz_localize(None))
     options_frame = _compute_gex_columns(spot_price, options_frame)
 
     total_gex = compute_total_gex(options_frame)

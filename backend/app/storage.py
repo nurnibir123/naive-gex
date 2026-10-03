@@ -116,6 +116,10 @@ class VercelBlobSnapshotStore(SnapshotStore):
 
 
 def get_snapshot_store() -> SnapshotStore:
-    if os.getenv("STORAGE_BACKEND", "local").lower() == "vercel_blob":
+    backend = os.getenv("STORAGE_BACKEND", "").lower()
+    # Vercel provides the Blob token in deployment environments. Prefer Blob
+    # automatically there so snapshots survive serverless instance churn, while
+    # keeping local development on the filesystem unless explicitly configured.
+    if backend == "vercel_blob" or (not backend and os.getenv("BLOB_READ_WRITE_TOKEN")):
         return VercelBlobSnapshotStore()
     return LocalSnapshotStore()
