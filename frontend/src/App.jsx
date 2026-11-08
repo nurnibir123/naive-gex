@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 
 import TopBar from './components/TopBar';
 import SpxGexPage from './pages/SpxGexPage';
@@ -111,6 +112,7 @@ export default function App() {
           <p className="research-footer-note">Educational references only. The terminal’s calculations remain simplified estimates and do not represent a complete institutional options or order-flow model.</p>
         </footer>
       </div>
+      <Analytics />
     </div>
   );
 }
