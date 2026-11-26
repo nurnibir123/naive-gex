@@ -8,12 +8,14 @@ import { getDataDates } from './lib/api';
 export default function App() {
   const [selectedDate, setSelectedDate] = useState('');
   const [availableDates, setAvailableDates] = useState([]);
+  const [dateRequest, setDateRequest] = useState({ ticker: '', date: '' });
   const [theme, setTheme] = useState(() => localStorage.getItem('naive-greeks-theme') || 'dark');
   const location = useLocation();
   const ticker = useMemo(() => {
     const requested = new URLSearchParams(location.search).get('ticker') || 'SPX';
     return requested.trim().toUpperCase().replace(/[^A-Z0-9_.-]/g, '') || 'SPX';
   }, [location.search]);
+  const requestedDate = dateRequest.ticker === ticker ? dateRequest.date : '';
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -22,22 +24,28 @@ export default function App() {
 
   useEffect(() => {
     let cancelled = false;
+    setDateRequest({ ticker, date: '' });
+    setSelectedDate('');
+    setAvailableDates([]);
+    let loadedSnapshot = '';
 
     const loadTickerDates = (snapshotDate = '') => getDataDates(ticker)
       .then((payload) => {
         if (cancelled) return;
-        const dates = Array.isArray(payload?.dates) ? payload.dates : [];
+        snapshotDate = loadedSnapshot || snapshotDate;
+        const dates = Array.isArray(payload?.dates) ? [...payload.dates] : [];
         if (snapshotDate && !dates.some((entry) => entry.iso === snapshotDate)) {
           dates.push({ iso: snapshotDate, key: snapshotDate });
         }
         const dateValues = new Set(dates.map((entry) => entry.iso));
         setAvailableDates(dates);
         setSelectedDate((current) => (
-          current && dateValues.has(current) ? current : payload?.latest || snapshotDate || ''
+          current && dateValues.has(current) ? current : snapshotDate || payload?.latest || ''
         ));
       })
       .catch(() => {
         if (!cancelled) {
+          snapshotDate = loadedSnapshot || snapshotDate;
           setAvailableDates(snapshotDate ? [{ iso: snapshotDate, key: snapshotDate }] : []);
           setSelectedDate(snapshotDate);
         }
@@ -48,7 +56,11 @@ export default function App() {
       const dateKey = String(event.detail?.dateKey || '');
       const match = dateKey.match(/^(\d{2})-(\d{2})-(\d{4})$/);
       const snapshotDate = match ? `${match[3]}-${match[1]}-${match[2]}` : '';
-      loadTickerDates(snapshotDate);
+      if (!snapshotDate) return;
+      loadedSnapshot = snapshotDate;
+      setSelectedDate(snapshotDate);
+      setAvailableDates((dates) => dates.some((entry) => entry.iso === snapshotDate)
+        ? dates : [...dates, { iso: snapshotDate, key: dateKey }]);
     };
 
     loadTickerDates();
@@ -66,16 +78,16 @@ export default function App() {
         <TopBar
           selectedDate={selectedDate}
           availableDates={availableDates}
-          onDateChange={setSelectedDate}
+          onDateChange={(date) => { setSelectedDate(date); setDateRequest({ ticker, date }); }}
           theme={theme}
           onToggleTheme={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
         />
 
         <div className="content-body">
           <Routes>
-            <Route path="/" element={<SpxGexPage selectedDate={selectedDate} />} />
-            <Route path="/spx-gamma" element={<SpxGexPage selectedDate={selectedDate} />} />
-            <Route path="/spx-gex" element={<SpxGexPage selectedDate={selectedDate} />} />
+            <Route path="/" element={<SpxGexPage selectedDate={requestedDate} />} />
+            <Route path="/spx-gamma" element={<SpxGexPage selectedDate={requestedDate} />} />
+            <Route path="/spx-gex" element={<SpxGexPage selectedDate={requestedDate} />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>

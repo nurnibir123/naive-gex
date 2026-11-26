@@ -20,12 +20,21 @@ async function request(path, options = {}) {
   return response.json();
 }
 
+const pendingRequests = new Map();
+
+function getOnce(path) {
+  if (!pendingRequests.has(path)) {
+    pendingRequests.set(path, request(path).finally(() => pendingRequests.delete(path)));
+  }
+  return pendingRequests.get(path);
+}
+
 export function getDataDates(ticker = 'SPX') {
-  return request(withQuery('/api/data/dates', { ticker }));
+  return getOnce(withQuery('/api/data/dates', { ticker }));
 }
 
 export function getSpxGamma(date, ticker = 'SPX') {
-  return request(withQuery('/api/gex/spx', { date, ticker }));
+  return getOnce(withQuery('/api/gex/spx', { date, ticker }));
 }
 
 export function refreshSpxGamma(date, force = false, ticker = 'SPX') {

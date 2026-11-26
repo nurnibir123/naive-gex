@@ -20,25 +20,29 @@ export default function SpxGexPage({ selectedDate }) {
   const [searchParams] = useSearchParams();
   const ticker = useMemo(() => normalizeTicker(searchParams.get('ticker') || 'SPX'), [searchParams]);
 
-  const loadGamma = async () => {
+  useEffect(() => {
+    let cancelled = false;
+    const loadGamma = async () => {
     setLoading(true);
     setError('');
     try {
       const payload = await getSpxGamma(selectedDate, ticker);
+      if (cancelled) return;
       setGamma(payload);
       window.dispatchEvent(new CustomEvent('elysium-gamma-loaded', {
         detail: { ticker: payload?.ticker || ticker, dateKey: payload?.date_key },
       }));
     } catch (err) {
+      if (cancelled) return;
       setError(err.message || 'Failed to load Greek exposure data.');
       setGamma(null);
     } finally {
-      setLoading(false);
+      if (!cancelled) setLoading(false);
     }
   };
 
-  useEffect(() => {
     loadGamma();
+    return () => { cancelled = true; };
   }, [selectedDate, ticker]);
 
   return (
@@ -57,7 +61,7 @@ export default function SpxGexPage({ selectedDate }) {
             <span className="loading-spinner" aria-hidden="true" />
             <div>
               <p className="analytics-loading-title">Loading {ticker} gamma analytics...</p>
-              <p className="analytics-loading-note">Fetching the option chain and building the exposure profile.</p>
+              <p className="analytics-loading-note">Loading the saved exposure snapshot.</p>
             </div>
           </div>
           <div className="loading-progress" aria-hidden="true"><span /></div>
