@@ -127,6 +127,14 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+The Vercel Python SDK is pinned to `0.11.4` in both requirements files because
+the snapshot store uses its `BlobClient` API. Validate SDK upgrades with the
+storage compatibility tests (from the repository root):
+
+```bash
+backend/.venv/bin/python -m unittest discover -s backend/tests -v
+```
+
 ### 2) Frontend install
 
 ```bash
